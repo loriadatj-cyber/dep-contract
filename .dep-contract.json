@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "lockfile": "package-lock.json",
+  "policy": {
+    "allowedHosts": [
+      "registry.npmjs.org"
+    ],
+    "allowGit": false,
+    "allowHttp": false,
+    "requireIntegrity": true,
+    "allowNewInstallScripts": false
+  },
+  "packages": [],
+  "approvals": [
+    {
+      "at": "2026-06-07T12:20:01.739Z",
+      "actor": "Administrator",
+      "reason": "Initial dependency contract",
+      "packageCount": 0
+    },
+    {
+      "at": "2026-06-07T12:20:27.320Z",
+      "actor": "Administrator",
+      "reason": "Synchronize project metadata for initial release",
+      "packageCount": 0
+    }
+  ]
+}

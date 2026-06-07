@@ -1,0 +1,16 @@
+name: dep-contract
+description: Verify that npm dependency graph changes were explicitly reviewed and approved
+branding:
+  icon: shield
+  color: blue
+inputs:
+  contract:
+    description: Path to the dependency contract
+    required: false
+    default: .dep-contract.json
+runs:
+  using: composite
+  steps:
+    - name: Check dependency contract
+      shell: bash
+      run: node "${{ github.action_path }}/bin/dep-contract.js" check --contract "${{ inputs.contract }}"

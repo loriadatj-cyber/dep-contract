@@ -1,0 +1,25 @@
+name: Bug report
+description: Report incorrect behavior or a false positive
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Include the command, expected result, and actual result.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: dep-contract version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Node.js version
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Minimal lockfile or reproduction
+      description: Remove private registry credentials before sharing.

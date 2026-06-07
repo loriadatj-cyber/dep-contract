@@ -1,0 +1,45 @@
+{
+  "name": "dep-contract",
+  "version": "0.1.0",
+  "description": "Review and approve npm dependency graph changes as an auditable contract.",
+  "type": "module",
+  "bin": {
+    "dep-contract": "./bin/dep-contract.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node ./bin/dep-contract.js check",
+    "test": "node --test",
+    "lint": "node --check ./bin/dep-contract.js && node --check ./src/cli.js && node --check ./src/compare.js && node --check ./src/contract.js && node --check ./src/format.js && node --check ./src/index.js && node --check ./src/lockfile.js",
+    "prepack": "npm test && npm run lint"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dependency",
+    "lockfile",
+    "security",
+    "supply-chain",
+    "package-lock",
+    "github-action"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loriadatj-cyber/dep-contract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/loriadatj-cyber/dep-contract/issues"
+  },
+  "homepage": "https://github.com/loriadatj-cyber/dep-contract#readme"
+}
