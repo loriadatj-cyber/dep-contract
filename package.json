@@ -4,7 +4,7 @@
   "description": "Review and approve npm dependency graph changes as an auditable contract.",
   "type": "module",
   "bin": {
-    "dep-contract": "./bin/dep-contract.js"
+    "dep-contract": "bin/dep-contract.js"
   },
   "exports": {
     ".": "./src/index.js"
