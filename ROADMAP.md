@@ -6,7 +6,7 @@ The roadmap is driven by maintainer feedback and real lockfile fixtures.
 
 - package-lock v2/v3 graph contracts
 - source, integrity, and install-script policies
-- text, JSON, and GitHub job summary output
+- text, JSON, Markdown, SARIF, and GitHub job summary output
 - auditable approval reasons
 
 ## 0.2 - review ergonomics
@@ -14,7 +14,7 @@ The roadmap is driven by maintainer feedback and real lockfile fixtures.
 - scoped and expiring policy exceptions
 - compact reports for large lockfile updates
 - optional direct-vs-transitive dependency grouping
-- SARIF output
+- richer SARIF locations and pull request annotations
 
 ## 0.3 - more ecosystems
 

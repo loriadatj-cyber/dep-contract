@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "lockfile": "package-lock.json",
+  "policy": {
+    "allowedHosts": [
+      "registry.npmjs.org"
+    ],
+    "allowGit": false,
+    "allowHttp": false,
+    "requireIntegrity": true,
+    "allowNewInstallScripts": false
+  },
+  "packages": [
+    {
+      "path": "node_modules/left-pad",
+      "name": "left-pad",
+      "version": "1.3.0",
+      "resolved": "https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz",
+      "integrity": "sha512-XI5MPzVNApjAyhQz1M3npTRm4UHPpF0ot/6Jtx1G7eQd2vQb8GIR5YIou9GlHa8T0fI8s3q3bXzP7u6U2jM4Hg==",
+      "source": "https",
+      "hasInstallScript": false,
+      "dev": false,
+      "optional": false,
+      "link": false
+    }
+  ],
+  "approvals": [
+    {
+      "at": "2026-07-05T00:00:00.000Z",
+      "actor": "maintainer",
+      "reason": "Initial dependency contract before risky dependencies were added",
+      "packageCount": 1
+    }
+  ]
+}
+

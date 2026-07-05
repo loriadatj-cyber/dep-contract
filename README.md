@@ -60,7 +60,7 @@ Add the following workflow step after checkout:
   with:
     node-version: 20
 - run: npm ci
-- uses: loriadatj-cyber/dep-contract@v1
+- uses: loriadatj-cyber/dep-contract@v0.1.0
 ```
 
 The action fails on unapproved changes and writes a readable report to the
@@ -127,6 +127,11 @@ work includes pnpm and Yarn lockfiles, richer package provenance, policy
 exceptions with expiry dates, and first-class PR review comments.
 
 See [ROADMAP.md](ROADMAP.md) for milestones.
+
+## Examples
+
+See [examples](examples) for clean and risky npm fixtures, reviewer output, and
+SARIF upload examples.
 
 ## Security model
 

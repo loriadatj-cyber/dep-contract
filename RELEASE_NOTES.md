@@ -9,6 +9,7 @@
 - Flag risky policy violations such as Git dependencies, insecure HTTP package sources, unapproved registry hosts, missing integrity hashes, and newly introduced install scripts.
 - Emit reviewer-friendly text, Markdown, JSON, and SARIF.
 - Upload SARIF to GitHub code scanning for supply-chain review findings.
+- Try clean and risky npm fixtures under `examples/fixtures`.
 
 ## Install
 
