@@ -55,11 +55,38 @@ The approval reason and actor are retained in the contract for future review.
 Add the following workflow step after checkout:
 
 ```yaml
+- uses: actions/checkout@v4
+- uses: actions/setup-node@v4
+  with:
+    node-version: 20
+- run: npm ci
 - uses: loriadatj-cyber/dep-contract@v1
 ```
 
 The action fails on unapproved changes and writes a readable report to the
 GitHub job summary.
+
+### Upload SARIF to code scanning
+
+You can also upload policy violations to GitHub code scanning:
+
+```yaml
+permissions:
+  contents: read
+  security-events: write
+
+steps:
+  - uses: actions/checkout@v4
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 20
+  - run: npm ci
+  - run: npx dep-contract check --format sarif > dep-contract.sarif
+    continue-on-error: true
+  - uses: github/codeql-action/upload-sarif@v3
+    with:
+      sarif_file: dep-contract.sarif
+```
 
 ## Policy
 
@@ -83,7 +110,7 @@ Policy changes should receive the same scrutiny as dependency approvals.
 
 ```text
 dep-contract init [--lockfile path] [--contract path]
-dep-contract check [--contract path] [--format text|json|markdown]
+dep-contract check [--contract path] [--format text|json|markdown|sarif]
 dep-contract approve --reason "review note" [--contract path]
 ```
 

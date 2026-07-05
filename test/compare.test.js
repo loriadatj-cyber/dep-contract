@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { compareContract } from "../src/compare.js";
+import { formatSarif } from "../src/format.js";
 
 const cleanPackage = {
   path: "node_modules/alpha",
@@ -61,4 +62,18 @@ test("blocks unapproved hosts and insecure sources", () => {
   const result = compareContract(contract, [packageFromMirror]);
   assert.ok(result.violations.some((item) => item.rule === "allowHttp"));
   assert.ok(result.violations.some((item) => item.rule === "allowedHosts"));
+});
+
+test("formats policy violations as SARIF", () => {
+  const packageFromMirror = {
+    ...cleanPackage,
+    resolved: "http://mirror.invalid/alpha.tgz",
+    source: "http"
+  };
+  const result = compareContract(contract, [packageFromMirror]);
+  const sarif = JSON.parse(formatSarif(result));
+  assert.equal(sarif.version, "2.1.0");
+  assert.equal(sarif.runs[0].tool.driver.name, "dep-contract");
+  assert.ok(sarif.runs[0].results.some((item) => item.ruleId === "allowHttp"));
+  assert.ok(sarif.runs[0].results.every((item) => item.locations[0].physicalLocation.artifactLocation.uri === "package-lock.json"));
 });

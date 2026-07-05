@@ -11,9 +11,12 @@
   },
   "files": [
     "bin",
+    "examples",
     "src",
     "action.yml",
+    "CHANGELOG.md",
     "README.md",
+    "RELEASE_NOTES.md",
     "LICENSE"
   ],
   "scripts": {

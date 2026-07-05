@@ -41,3 +41,12 @@ test("approve requires a meaningful reason and records it", async () => {
   assert.equal(contract.approvals.length, 2);
   assert.equal(contract.approvals[1].reason, "Reviewed upstream release");
 });
+
+test("check can emit SARIF", async () => {
+  const cwd = await fixture();
+  await exec(process.execPath, [cli, "init"], { cwd });
+  const { stdout } = await exec(process.execPath, [cli, "check", "--format", "sarif"], { cwd });
+  const sarif = JSON.parse(stdout);
+  assert.equal(sarif.version, "2.1.0");
+  assert.equal(sarif.runs[0].results.length, 0);
+});

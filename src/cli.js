@@ -6,14 +6,14 @@ import {
   writeContract
 } from "./contract.js";
 import { compareContract } from "./compare.js";
-import { formatMarkdown, formatText } from "./format.js";
+import { formatMarkdown, formatSarif, formatText } from "./format.js";
 import { loadLockfile } from "./lockfile.js";
 
 const HELP = `dep-contract - auditable npm dependency approvals
 
 Usage:
   dep-contract init [--lockfile path] [--contract path]
-  dep-contract check [--contract path] [--format text|json|markdown]
+  dep-contract check [--contract path] [--format text|json|markdown|sarif]
   dep-contract approve --reason "review note" [--contract path]
 
 Commands:
@@ -63,6 +63,8 @@ async function check(options) {
     console.log(JSON.stringify(result, null, 2));
   } else if (format === "markdown") {
     console.log(formatMarkdown(result));
+  } else if (format === "sarif") {
+    console.log(formatSarif(result));
   } else if (format === "text") {
     console.log(formatText(result));
   } else {

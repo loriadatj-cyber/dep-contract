@@ -13,6 +13,43 @@ function changeLine(change) {
   return `~ ${change.path}: ${change.field} ${value(change.before)} -> ${value(change.after)}`;
 }
 
+function levelForViolation(rule) {
+  if (["allowGit", "allowHttp", "allowNewInstallScripts"].includes(rule)) return "error";
+  if (["allowedHosts", "requireIntegrity"].includes(rule)) return "warning";
+  return "note";
+}
+
+function resultForViolation(violation) {
+  return {
+    ruleId: violation.rule,
+    level: levelForViolation(violation.rule),
+    message: {
+      text: violation.message
+    },
+    locations: [
+      {
+        physicalLocation: {
+          artifactLocation: {
+            uri: "package-lock.json"
+          },
+          region: {
+            startLine: 1
+          }
+        },
+        logicalLocations: [
+          {
+            name: violation.path,
+            kind: "package"
+          }
+        ]
+      }
+    ],
+    properties: {
+      packagePath: violation.path
+    }
+  };
+}
+
 export function formatText(result) {
   if (result.ok) {
     return `Dependency contract is valid (${result.summary.packages} packages).`;
@@ -55,4 +92,55 @@ export function formatMarkdown(result) {
     lines.push(...result.violations.map((item) => `- \`${item.path}\`: ${item.message}`));
   }
   return lines.join("\n");
+}
+
+export function formatSarif(result) {
+  const rules = [
+    {
+      id: "allowGit",
+      shortDescription: { text: "Git dependency is not allowed" },
+      help: { text: "Git dependencies bypass the configured registry provenance policy." }
+    },
+    {
+      id: "allowHttp",
+      shortDescription: { text: "Insecure HTTP source is not allowed" },
+      help: { text: "HTTP package sources can be modified in transit." }
+    },
+    {
+      id: "requireIntegrity",
+      shortDescription: { text: "Integrity hash is missing" },
+      help: { text: "Missing integrity hashes make lockfile review less verifiable." }
+    },
+    {
+      id: "allowedHosts",
+      shortDescription: { text: "Package source host is not allowed" },
+      help: { text: "Package tarballs should resolve from approved registry hosts." }
+    },
+    {
+      id: "allowNewInstallScripts",
+      shortDescription: { text: "New install script requires approval" },
+      help: { text: "Install scripts execute code during dependency installation and should be reviewed." }
+    }
+  ];
+
+  return JSON.stringify({
+    version: "2.1.0",
+    $schema: "https://json.schemastore.org/sarif-2.1.0.json",
+    runs: [
+      {
+        tool: {
+          driver: {
+            name: "dep-contract",
+            informationUri: "https://github.com/loriadatj-cyber/dep-contract",
+            rules
+          }
+        },
+        results: result.violations.map(resultForViolation),
+        properties: {
+          summary: result.summary,
+          dependencyChanges: result.changes
+        }
+      }
+    ]
+  }, null, 2);
 }
